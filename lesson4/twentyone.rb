@@ -122,5 +122,3 @@ loop do
   prompt("thank you for playing")
   break
 end
-
-# dealer's turn
