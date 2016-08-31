@@ -37,9 +37,20 @@ def busted?(card_value)
 end
 
 def starting_display
-  puts "------------------------BLACKJACK-------------------------------"
+  puts "------------------------TWENTY_ONE-------------------------------"
   prompt("S for spade, H for hearts, D for Diamond, C for Club")
   prompt("J for jack, Q for queen, K for King, A for Ace")
+end
+
+def play_again?
+  reply = ''
+  loop do
+    prompt("play again ? (y or n)")
+    reply = gets.chomp.downcase
+    break if reply == 'y' || reply == 'n'
+    prompt("invalid answer")
+  end
+  reply.start_with?('y')
 end
 
 # play again loop
@@ -57,7 +68,7 @@ loop do
     answer = ''
     loop do
       prompt("hit or stay?") # validation loop
-      answer = gets.chomp
+      answer = gets.chomp.downcase
       break if answer == 'hit' || answer == 'stay'
       prompt("invalid reply")
     end
@@ -77,11 +88,7 @@ loop do
 
   if busted?(player_value)
     prompt("You have busted!")
-    prompt("play again ? (y or n)")
-    reply = gets.chomp
-    next if reply == 'y'
-    prompt("thank you for playing")
-    break
+    play_again? ? next : break
   end
 
   # dealer's turn
@@ -100,25 +107,18 @@ loop do
 
   if busted?(dealer_value)
     prompt("Dealer has busted!")
-    prompt("play again ? (y or n)")
-    reply = gets.chomp
-    next if reply == 'y'
-    prompt("thank you for playing")
-    break
+    play_again? ? next : break
   end
 
   # compare score
   if player_value > dealer_value
     prompt("player won!")
-
   elsif player_value < dealer_value
     prompt("dealer won!")
   else
     prompt("It's a tie")
   end
-  prompt("play again ? (y or n)")
-  reply = gets.chomp
-  next if reply == 'y'
-  prompt("thank you for playing")
-  break
+  play_again? ? next : break
 end
+
+prompt("Thank you for playing twenty-one")
